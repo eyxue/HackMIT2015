@@ -1,0 +1,87 @@
+<!DOCTYPE>
+<html ng-app="checklistApp">
+
+<head>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+
+  <link href="style.css" rel="stylesheet">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script src="//www.parsecdn.com/js/parse-1.6.2.min.js"></script>
+  <meta name="viewport" content="width=device-width initial-scale=1">
+
+  <title>Trader Joe's Checklist</title>
+</head>
+
+<body>
+  <div id="test-counter"></div>
+  <div class="container" style="height:100%" ng-controller="AppCtrl">
+
+    <div class="navibar">
+      <h1>Trader Joe's Checklist</h1>
+      <span id="shopper-who">Shopper: 
+        <select ng-init="shopper.name='Alex'" ng-model="shopper.name" Shopper>
+          <option value="Alex">Alex</option>
+          <option value="Rebecca">Rebecca</option>
+        </select>
+      </span>
+      <span class="refresh-btn">
+          <button class="btn btn-primary btn-responsive" ng-click="refresh()">Refresh</button>
+      </span>
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Claim</th>
+          <th><i class="glyphicon glyphicon-check"></i></th>
+          <th>Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <input type="checkbox" ng-model="item.claim"> Claim it?
+          </td>
+          <td>
+            <input type="checkbox" ng-model="item.check">
+          </td>
+          <td>
+            <input class="form-control" ng-model="item.name">
+          </td>
+          <td>
+            <button class="btn btn-primary btn-responsive" ng-click="addItem()">Add Item</button>
+          </td>
+        </tr>
+        <tr ng-repeat="thisitem in itemlist track by $index">
+          <td class="claimedby-{{thisitem.claimedby}}">
+            <input type="checkbox" ng-model="thisitem.claimed" ng-click="claimed(thisitem._id,thisitem.claimed,shopper.name)">&nbsp;{{thisitem.claimedby}}
+          </td>
+          <td>
+            <input type="checkbox" ng-model="thisitem.checked" ng-click="checked(thisitem._id,thisitem.checked)">
+          </td>
+          <td>
+            <div for="{{$index}}" class="checked-{{thisitem.checked}}">
+              <div class="claimed-{{thisitem.claimed}}">{{thisitem.name}}</div>
+            </div>
+          </td>
+          <td>
+            <button class="btn btn-danger btn-responsive" ng-click="remove(thisitem._id)">Remove</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>
+    <!--script src="angular.js"></script-->
+    <script src="controllers/controller.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
+
+</body>
+
+</html>

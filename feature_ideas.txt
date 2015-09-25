@@ -1,0 +1,4 @@
+-Add quantity of item 
+-Add color coding for who buys what 
+-Add chat feature 
+-Add refresh button or figure out how to reliably reconnect mobile clients post wakeup 
